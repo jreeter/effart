@@ -44,27 +44,23 @@ def map_dataframe(points):
         'longitude': data[:, 1]
     })
 
-
 # Create a list of dataframes for each activity.
 activities = list(map(map_dataframe, points))
 
-# def get_max_lats(df):
-#     return df.latitude.max()
-#
-# y_maxs = max(list(map(get_max_lats, activities)))
-#
-# print(y_maxs)
+x_max = max(list(map(lambda x: x.longitude.max(), activities)))
+x_min = max(list(map(lambda x: x.longitude.min(), activities)))
+y_max = max(list(map(lambda x: x.latitude.max(), activities)))
+y_min = max(list(map(lambda x: x.latitude.min(), activities)))
 
 dataset = []
 
 for activity in activities:
 
-    x_max = activity.longitude.max()
-    x_min = activity.longitude.min()
-    y_max = activity.latitude.max()
-    y_min = activity.latitude.min()
+    # x_max = activity.longitude.max()
+    # x_min = activity.longitude.min()
+    # y_max = activity.latitude.max()
+    # y_min = activity.latitude.min()
 
-    print(activity)
 
     df = pd.DataFrame({
         'longitude': [],
@@ -91,7 +87,9 @@ fig, plots = plt.subplots(1, len(dataset), figsize=(10,10))
 
 for index, plot in enumerate(plots):
     ds = dataset[index]
-    plot.axis('off')
+    # plot.axis('off')
+    # plot.set_xlim(-0.1, 1.1)
+    # plot.set_ylim(0, 1)
     plot.set_aspect('equal')
     plot.plot(ds.longitude, ds.latitude)
 
