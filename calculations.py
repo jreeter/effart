@@ -22,9 +22,16 @@ def get_y_height(y_max, y_min):
 # ELSE
 #     1/[(Supporting Calc) X (Width)]
 # END
-# The above should be the same as taking 1 / get_max_axis
-def get_normalized_multiplier(y_max, y_min, x_max, x_min, long):
-    return 1 / get_max_axis(y_max, y_min, x_max, x_min, long)
+def get_normalized_multiplier(y_max, y_min, x_max, x_min, lat):
+
+    y_height = get_y_height(y_max, y_min)
+
+    x_width = get_x_width(x_max, x_min, lat)
+
+    if y_height > x_width:
+        return 1 / y_height
+    else:
+        return 1 / x_width
 
 
 # MAX(Y (Height), X (Width))
