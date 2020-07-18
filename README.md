@@ -7,3 +7,7 @@ Data is currently loaded from points.py that holds activities as arrays.
 There are activity0.csv, activity1.csv, and activity2.csv, the number in
 the filename corresponds to their positions in the points.py array.
 
+To install and run:
+
+1. pip install -r requirements.txt
+2. python main.py
