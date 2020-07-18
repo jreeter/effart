@@ -5,8 +5,14 @@ import matplotlib.pyplot as plt
 from calculations import get_normalized_x, get_normalized_y
 
 
-# Takes an array of arrays that contain [lat,long] points, each child of the outermost array is a separate activity
-# recorded by the athlete.
+# Points is an array of arrays that contains lat, lng points, each lat,long pair is an array e.g:
+# [
+#     [[lat0, long0], [lat1, long1] .... [latN, long N]],
+#     ...,
+#     ...
+# ]
+# This function turns each activity array into it's own dataframe with latitude and longitude columns that hold
+# their respective points.
 def map_dataframe(points):
     data = np.array(points)
     return pd.DataFrame({
@@ -20,19 +26,20 @@ def normalize(activity):
 
     normalizer = lambda lat, long: [
         get_normalized_y(y_max, y_min, x_max, x_min, lat, long),
-        get_normalized_x(y_max, y_min, x_max, x_min, lat, long)
+        get_normalized_x(y_max, y_min, x_max, x_min, lat, long),
     ]
 
     lat_long_pairs = list(map(normalizer, activity.latitude, activity.longitude))
 
+    # Map normalized values back into a dataframe.
     return map_dataframe(lat_long_pairs)
 
 
-# Main...
+# Main Entry...
 
 activities = list(map(map_dataframe, points))
 
-# Get the min/max of long/lat across all activities.
+# Get the min/max of long/lat across all activities *BEFORE NORMALIZING*.
 x_max = max(list(map(lambda x: x.longitude.max(), activities)))
 x_min = max(list(map(lambda x: x.longitude.min(), activities)))
 y_max = max(list(map(lambda x: x.latitude.max(), activities)))
@@ -42,7 +49,7 @@ y_min = max(list(map(lambda x: x.latitude.min(), activities)))
 normalized_activities = list(map(normalize, activities))
 
 # Plot all the activities
-fig, plots = plt.subplots(1, len(normalized_activities), figsize=(10,1))
+fig, plots = plt.subplots(1, len(normalized_activities))
 for index, plot in enumerate(plots):
     ds = normalized_activities[index]
     # plot.axis('off')
@@ -51,6 +58,6 @@ for index, plot in enumerate(plots):
     plot.set_aspect(1)
     plot.plot(ds.longitude, ds.latitude)
 
-fig.tight_layout()
+# fig.tight_layout()
 # plt.subplot_tool()
 plt.show()
