@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from calculations import get_normalized_x, get_normalized_y
 
-
 # Points is an array of arrays that contains lat, lng points, each lat,long pair is an array e.g:
 # [
 #     [[lat0, long0], [lat1, long1] .... [latN, long N]],
