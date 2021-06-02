@@ -23,4 +23,4 @@ six==1.15.0
 snaptime==0.2.4
 stravaio==0.0.9
 tzlocal==2.1
-urllib3==1.25.9
+urllib3==1.26.5
